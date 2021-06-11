@@ -8,23 +8,23 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-func main() () {
-  stderr := log.New(os.Stderr, "", 0)
+func main() {
+	stderr := log.New(os.Stderr, "", 0)
 
-  app := &cli.App{
+	app := &cli.App{
 		Name:  "toastman",
 		Usage: "friendly http client",
 		Commands: []*cli.Command{
-      command.Workspaces(),
+			command.Workspaces(),
 		},
-    Action: func (c *cli.Context) error {
-      cli.ShowAppHelpAndExit(c, 0)
-      return nil
-    },
+		Action: func(c *cli.Context) error {
+			cli.ShowAppHelpAndExit(c, 0)
+			return nil
+		},
 	}
 
-  err := app.Run(os.Args)
-  if (err != nil) {
-    stderr.Fatal(err)
-  }
+	err := app.Run(os.Args)
+	if err != nil {
+		stderr.Fatal(err)
+	}
 }
