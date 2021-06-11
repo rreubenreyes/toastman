@@ -1,29 +1,30 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
+	"github.com/rreubenreyes/toastman/internal/command"
 	"github.com/urfave/cli/v2"
 )
 
-type Args struct {
-	subcommand string
-}
+func main() () {
+  stderr := log.New(os.Stderr, "", 0)
 
-func main() {
-	app := &cli.App{
-		Name: "toastman",
-		Usage: "CLI HTTP client with Postman-like features",
-		Action: func (c *cli.Context) error {
-			fmt.Println("the main command performs an HTTP request")
-			return nil
+  app := &cli.App{
+		Name:  "toastman",
+		Usage: "friendly http client",
+		Commands: []*cli.Command{
+      command.Workspaces(),
 		},
+    Action: func (c *cli.Context) error {
+      cli.ShowAppHelpAndExit(c, 0)
+      return nil
+    },
 	}
 
-	err := app.Run(os.Args)
-	if err != nil {
-		log.Fatal(err)
-	}
+  err := app.Run(os.Args)
+  if (err != nil) {
+    stderr.Fatal(err)
+  }
 }
