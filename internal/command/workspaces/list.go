@@ -21,7 +21,10 @@ func List() (cmd *cli.Command) {
 func list(c *cli.Context) error {
 	DefaultWorkspace()
 
-	workspaces, _ := ioutil.ReadDir(config.ToastPath() + "/" + WorkspacesPath())
+	workspaces, err := ioutil.ReadDir(config.ToastPath() + "/" + WorkspacesPath())
+	if err != nil {
+		panic(err)
+	}
 	for _, workspace := range workspaces {
 		fmt.Println(workspace.Name())
 	}

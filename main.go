@@ -1,15 +1,12 @@
 package main
 
 import (
-	"log"
 	"os"
 
 	"github.com/rreubenreyes/toastman/internal/command"
 	"github.com/rreubenreyes/toastman/internal/config"
 	"github.com/urfave/cli/v2"
 )
-
-var stderr = log.New(os.Stderr, "", 0)
 
 func main() {
 	app := &cli.App{
@@ -31,6 +28,6 @@ func main() {
 
 	err := app.Run(os.Args)
 	if err != nil {
-		stderr.Fatal(err)
+		panic(err)
 	}
 }

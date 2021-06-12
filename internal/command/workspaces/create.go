@@ -33,7 +33,7 @@ func create(c *cli.Context) error {
 	}
 
 	if !IsValidWorkspaceName([]byte(name)) {
-		config.Stderr.Fatalf("invalid workspace name \"%s\"", name)
+		panic(fmt.Sprintf("invalid workspace name \"%s\"", name))
 	}
 
 	newWorkspacePath := fmt.Sprintf("%s/%s/%s", config.ToastPath(), WorkspacesPath(), name)
