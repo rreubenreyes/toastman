@@ -3,6 +3,7 @@ package workspaces
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/rreubenreyes/toastman/internal/config"
 	"github.com/urfave/cli/v2"
@@ -32,8 +33,11 @@ func create(c *cli.Context) error {
 		return nil
 	}
 
-	if !IsValidWorkspaceName([]byte(name)) {
-		panic(fmt.Sprintf("invalid workspace name \"%s\"", name))
+	if strings.TrimSpace(name) == DefaultWorkspaceName() {
+		config.Stderr.Fatalf("cannot use \"%s\" as custom workspace name", DefaultWorkspaceName())
+	}
+	if !IsValidWorkspaceName(name) {
+		config.Stderr.Fatalf("invalid workspace name \"%s\"", name)
 	}
 
 	newWorkspacePath := fmt.Sprintf("%s/%s/%s", config.ToastPath(), WorkspacesPath(), name)

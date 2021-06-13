@@ -2,7 +2,6 @@ package workspaces
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"regexp"
 
@@ -11,17 +10,21 @@ import (
 
 func WorkspacesPath() string { return "workspaces" }
 
+func DefaultWorkspaceName() string {
+	return ".default"
+}
+
 func DefaultWorkspace() string {
-	path := fmt.Sprintf("%s/%s/default", config.ToastPath(), WorkspacesPath())
+	path := fmt.Sprintf("%s/%s/%s", config.ToastPath(), WorkspacesPath(), DefaultWorkspaceName())
 	os.MkdirAll(path, os.ModePerm)
 
 	return path
 }
 
-func IsValidWorkspaceName(name []byte) bool {
+func IsValidWorkspaceName(name string) bool {
 	expr, err := regexp.Compile(`^[\w\d\-\_\.]*$`)
 	if err != nil {
-		log.Fatal("[workspaces] error parsing workspace name regexp")
+		panic(err)
 	}
-	return expr.Match(name)
+	return expr.Match([]byte(name))
 }

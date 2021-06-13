@@ -26,7 +26,9 @@ func list(c *cli.Context) error {
 		panic(err)
 	}
 	for _, workspace := range workspaces {
-		fmt.Println(workspace.Name())
+		if workspace.Name() != DefaultWorkspaceName() {
+			fmt.Println(workspace.Name())
+		}
 	}
 
 	return nil

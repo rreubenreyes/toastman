@@ -1,10 +1,12 @@
 package config
 
 import (
+	"log"
 	"os"
 )
 
 var (
+	Stderr    = log.New(os.Stderr, "", 0)
 	toastpath = os.Getenv("TOASTMAN_PATH")
 )
 
